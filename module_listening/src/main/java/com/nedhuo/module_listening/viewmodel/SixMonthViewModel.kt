@@ -18,6 +18,9 @@ class SixMonthViewModel : BaseViewModel() {
         JsoupManager.mInstance.execute("http://m.6yueting.com")
     }
 
+    /**
+     * 获取书籍列表
+     */
     fun getBookList() {
         ThreadUtils.executeByCached(object :
             ThreadUtils.SimpleTask<MutableList<SixMonthBookModel>?>() {
@@ -37,5 +40,9 @@ class SixMonthViewModel : BaseViewModel() {
                 }
             }
         })
+    }
+
+    fun getBookDetail(bookSuffix: String) {
+
     }
 }
