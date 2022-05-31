@@ -11,12 +11,6 @@ import com.nedhuo.module_listening.JsoupManager
 class SixMonthViewModel : BaseViewModel() {
     val dataUpdate = UnPeekLiveData<MutableList<SixMonthBookModel>>()
 
-    /**
-     * 加载解析网站数据
-     */
-    fun parseWebsite() {
-        JsoupManager.mInstance.execute("http://m.6yueting.com")
-    }
 
     /**
      * 获取书籍列表
@@ -42,7 +36,18 @@ class SixMonthViewModel : BaseViewModel() {
         })
     }
 
+    /**
+     * 获取书籍详情
+     */
     fun getBookDetail(bookSuffix: String) {
 
+    }
+
+
+    /**
+     * 加载解析网站数据
+     */
+    fun parseWebsite() {
+        JsoupManager.mInstance.execute("http://m.6yueting.com")
     }
 }

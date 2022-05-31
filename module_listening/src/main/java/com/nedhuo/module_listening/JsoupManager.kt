@@ -1,11 +1,12 @@
 package com.nedhuo.module_listening
 
+import android.os.Build
 import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ThreadUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.nedhuo.module_listening.net.SIX_MONTH_HOME_URL
 import com.nedhuo.module_listening.utils.SixMonthHtmlUtils
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -15,6 +16,7 @@ import org.jsoup.nodes.Document
  * */
 class JsoupManager private constructor() {
     private var mTaskMap: HashMap<String, JsoupTask> = hashMapOf()
+    var mUrlTypeMap: HashMap<String, SixMonthHtmlUtils.SixMonthParseType> = hashMapOf()
 
     //支持的解析链接
     private var mWebsiteList: ArrayList<String> = arrayListOf()
@@ -35,10 +37,19 @@ class JsoupManager private constructor() {
      * @param url 解析网址链接
      * @param type 解析网站类型（确认哪个网站 后期可以根据链接去判断 目前不确定链接都哪些）
      */
-    fun execute(url: String) {
+    fun execute(url: String, type: SixMonthHtmlUtils.SixMonthParseType) {
+        //url校验
         if (checkUrl(url)) {
+            ToastUtils.showShort("访问url不符合规则")
             return
         }
+        //url type保存
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            mUrlTypeMap.putIfAbsent(url, type)
+        } else {
+            mUrlTypeMap[url] = mUrlTypeMap[url] ?: type
+        }
+
         //任务缓存中是否存在该任务
         if (mTaskMap[url] != null && mTaskMap[url] is JsoupTask) {
             jsoupTask = mTaskMap[url]!!
@@ -54,26 +65,31 @@ class JsoupManager private constructor() {
     /**
      * 线程加载解析任务
      */
-    class JsoupTask(private val url: String) : ThreadUtils.SimpleTask<Boolean>() {
-        override fun doInBackground(): Boolean {
-            var document: Document? = null
+    inner class JsoupTask(private val url: String) : ThreadUtils.SimpleTask<String>() {
+        override fun doInBackground(): String? {
+            var document: Document?
             try {
                 document = Jsoup.connect(url).get()
             } catch (e: Exception) {
-                return false
+                return null
             }
             SixMonthHtmlUtils.parseHtmlByType(
-                SixMonthHtmlUtils.SixMonthParseType.TYPE_HOME,
+                mUrlTypeMap[url]!!,
                 document
             )
-            return true
+            return url
         }
 
-        override fun onSuccess(result: Boolean?) {
-            //todo 到此处 数据已经解析成功 保存到本地 刷新页面 通知时把Url发出去 移除任务
-            GlobalScope.launch {
-                parseUpdateFlow.emit(SixMonthHtmlUtils.SixMonthParseType.TYPE_HOME)
+        override fun onSuccess(result: String?) {
+            result?.run {
+                // GlobalScope是什么 为什么emit在suspend中调用
+                GlobalScope.launch {
+                    //更新相关类型的解析监听
+                    parseUpdateFlow.emit(mUrlTypeMap[url]!!)
+                }
             }
+
+
         }
     }
 
