@@ -1,0 +1,20 @@
+def build_versions = [:]
+build_versions.min_sdk = 21
+build_versions.compile_sdk = 32
+build_versions.target_sdk = 32
+build_versions.version_code = 1
+build_versions.version_name = "1.0.0"
+ext.build_versions = build_versions
+
+ext.deps=[:]
+//版本号
+def dep_version=[:]
+
+//jetpack相关依赖
+dep_version.room_version="2.4.2"
+def jetpack_dep=[:]
+jetpack_dep.room_runtime="androidx.room:room-runtime:${dep_version.room_version}"
+jetpack_dep.room_compile="androidx.room:room-compiler:${dep_version.room_version}"
+jetpack_dep.room_ktx="androidx.room:room-ktx:${dep_version.room_version}"
+jetpack_dep.room_paging="androidx.room:room-paging:2.5.0-alpha01:${dep_version.room_version}"
+deps.jetpack_dep=jetpack_dep

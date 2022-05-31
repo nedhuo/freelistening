@@ -1,0 +1,106 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "cd5a24c313eb52098452564f30014271",
+    "entities": [
+      {
+        "tableName": "six_month_book_list",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`bId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `bookName` TEXT, `bookImage` TEXT, `bookStatus` TEXT, `bookAuthor` TEXT, `bookAnchor` TEXT, `bookCategory` TEXT, `bookSuffix` TEXT, `bookSimpleDesc` TEXT, `bookDesc` TEXT, `bookEpisode` TEXT, `bookRank` TEXT, `bookExtra` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "bId",
+            "columnName": "bId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "bookName",
+            "columnName": "bookName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "bookImage",
+            "columnName": "bookImage",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "bookStatus",
+            "columnName": "bookStatus",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "bookAuthor",
+            "columnName": "bookAuthor",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "bookAnchor",
+            "columnName": "bookAnchor",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "bookCategory",
+            "columnName": "bookCategory",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "bookSuffix",
+            "columnName": "bookSuffix",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "bookSimpleDesc",
+            "columnName": "bookSimpleDesc",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "bookDesc",
+            "columnName": "bookDesc",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "bookEpisode",
+            "columnName": "bookEpisode",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "bookRank",
+            "columnName": "bookRank",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "bookExtra",
+            "columnName": "bookExtra",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "bId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cd5a24c313eb52098452564f30014271')"
+    ]
+  }
+}

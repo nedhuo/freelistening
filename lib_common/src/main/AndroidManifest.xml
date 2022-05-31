@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.nedhuo.lib_common">
+
+
+    <application
+        android:networkSecurityConfig="@xml/common_network_security_config"
+        android:usesCleartextTraffic="true">
+        <meta-data
+            android:name="design_width_in_dp"
+            android:value="375" />
+        <meta-data
+            android:name="design_height_in_dp"
+            android:value="812" />
+    </application>
+</manifest>
